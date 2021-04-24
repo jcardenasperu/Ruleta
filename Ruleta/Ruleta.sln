@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitOfWork", "UnitOfWork\Un
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{AF23A5B2-0173-4384-9E0B-7A78F07E18B2}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\jorge\Colombia\BD\Basedatos.sql = ..\..\..\..\..\jorge\Colombia\BD\Basedatos.sql
+		..\BD\Basedatos.sql = ..\BD\Basedatos.sql
 	EndProjectSection
 EndProject
 Global
