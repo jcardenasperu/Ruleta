@@ -296,6 +296,7 @@ DECLARE @vIdRuleta INT;
 DECLARE @vEstado VARCHAR(30);
 DECLARE @vValidarRegistro INT;
 DECLARE @vValidarParticipante INT;
+DECLARE @vValidarCreditoTotal decimal(20,2);
 DECLARE @vValidarEstado CHAR(1);
 BEGIN TRY
 
@@ -307,29 +308,36 @@ BEGIN TRY
 		END
 	SELECT @vValidarEstado = Estado FROM [RULETA] WHERE IdRuleta=@pIdRuleta;
 	IF @vValidarEstado='C'
-	BEGIN
-		SET @oMensajeError='-2|La ruleta se encuentra cerrada.';
-		RAISERROR(@oMensajeError,16,1);
-	END
+		BEGIN
+			SET @oMensajeError='-2|La ruleta se encuentra cerrada.';
+			RAISERROR(@oMensajeError,16,1);
+		END
 	ELSE IF @vValidarEstado='R'
-	BEGIN
-		SET @oMensajeError='-3|La ruleta aun no está abierta.';
-		RAISERROR(@oMensajeError,16,1);
-	END
+		BEGIN
+			SET @oMensajeError='-3|La ruleta aun no está abierta.';
+			RAISERROR(@oMensajeError,16,1);
+		END
+	SELECT @vValidarCreditoTotal = sum([NumCreditoApostado]) FROM [RULETA_PARTICIPANTES] WHERE IdRuleta=@pIdRuleta;
+	IF @vValidarCreditoTotal>=10000
+		BEGIN
+			SET @oMensajeError='-4|La ruleta excedió del límite dinero permitido.';
+			RAISERROR(@oMensajeError,16,1);
+		END
+
 	SELECT @vValidarParticipante = count(IdParticipante) FROM [PARTICIPANTES] WHERE IdParticipante=@pIdParticipante;
 	IF @vValidarParticipante=0
 		BEGIN
-			SET @oMensajeError='-4|El participante no existe.';
+			SET @oMensajeError='-5|El participante no existe.';
 			RAISERROR(@oMensajeError,16,1);
 		END
 	IF @pCreditoApostar=0
 		BEGIN
-			SET @oMensajeError='-5|El crédito debe ser mayor a 0.';
+			SET @oMensajeError='-6|El crédito debe ser mayor a 0.';
 			RAISERROR(@oMensajeError,16,1);
 		END
 	IF @pValorApostar=''
 		BEGIN
-			SET @oMensajeError='-6|Debe ingresar un numero de 0 al 36 o ingresar el color Rojo o Negro.';
+			SET @oMensajeError='-7|Debe ingresar un numero de 0 al 36 o ingresar el color Rojo o Negro.';
 			RAISERROR(@oMensajeError,16,1);
 		END
 	ELSE
@@ -339,7 +347,7 @@ BEGIN TRY
 				PRINT @vValorNumApos
 				if @vValorNumApos<0 OR @vValorNumApos>36
 					BEGIN
-						SET @oMensajeError='-7|Debe ingresar un numero de 0 al 36';
+						SET @oMensajeError='-8|Debe ingresar un numero de 0 al 36';
 						RAISERROR(@oMensajeError,16,1);
 					END
 					
@@ -348,7 +356,7 @@ BEGIN TRY
 			BEGIN
 				if upper(@pValorApostar)<>'ROJO' AND upper(@pValorApostar)<>'NEGRO'
 					BEGIN
-						SET @oMensajeError='-8|Debe ingresar el color Rojo o Negro.';
+						SET @oMensajeError='-9|Debe ingresar el color Rojo o Negro.';
 						RAISERROR(@oMensajeError,16,1);
 					END
 			END
