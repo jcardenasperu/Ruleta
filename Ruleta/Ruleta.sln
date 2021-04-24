@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories.Dapper", "Repo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitOfWork", "UnitOfWork\UnitOfWork.csproj", "{78BF5D7D-1A30-42F4-8EBE-66C7DE8D0A6B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{AF23A5B2-0173-4384-9E0B-7A78F07E18B2}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\jorge\Colombia\BD\Basedatos.sql = ..\..\..\..\..\jorge\Colombia\BD\Basedatos.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
