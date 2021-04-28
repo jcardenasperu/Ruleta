@@ -114,7 +114,9 @@ namespace WebApi.Controllers
             {
                 if (lstParticipates.Count == 1)
                 {
-                    if (lstParticipates[0].Resultado != "") return BadRequest("Denegada");
+                    if (lstParticipates[0].Resultado != null) {
+                        if (lstParticipates[0].Resultado != "") return BadRequest("Denegada");
+                    }
                     return Ok(new { results = lstParticipates });
                 }
                 return Ok(new { results = lstParticipates });
